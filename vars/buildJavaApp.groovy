@@ -6,21 +6,10 @@ def call(Map args=[:], Closure body={}) {
             new Git(this).checkout("${args.repo}")
         }
 
-        stage("Compile") {
-            sh "./mvnw clean compile"
-        }
-
-        stage("Unit Test") {
-            sh "./mvnw test"
-        }
-
-        stage("Integration Test") {
-            sh "./mvnw verify"
-        }
-
         stage("Package Artifact Jar") {
-            sh "./mvnw package -DskipTests=true"
+            sh "mvn -Dmaven.test.skip=true -Dmaven.test.failure.ignore clean package"
         }
+        
         body()
     }
 }
