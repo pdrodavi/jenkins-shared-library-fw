@@ -2,6 +2,11 @@ import com.mycompany.colinbut.Git
 
 def call(Map args=[:], Closure body={}) {
     node {
+        
+        tools {
+            maven "M3"
+        }
+        
         stage("Checkout") {
             new Git(this).checkout("${args.repo}")
         }
